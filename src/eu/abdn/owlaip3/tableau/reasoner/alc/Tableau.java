@@ -123,6 +123,17 @@ public class Tableau {
 	
 	// check offspring nodes for blocking
 	void checkBlock(OWLIndividual blockingNode, OWLIndividual blockedParent){
+		//todo to check
+		for (Map.Entry<OWLObjectProperty, HashSet<OWLIndividual>> edge : edges.get(blockedParent).entrySet()) {
+			for (OWLIndividual child : edge.getValue())
+				if (!blocked.contains(child) && isSubsumed(child,blockingNode))
+					block(child);
+				else 
+					checkBlock(blockingNode,child);
+		}
+	}
+	Boolean isSubsumed(OWLIndividual child, OWLIndividual parent) {
+		return nodeLabels.get(parent).containsAll(nodeLabels.get(child));
 	}
 	
 	// blocking offspring nodes
@@ -139,7 +150,36 @@ public class Tableau {
 	
 	boolean orRule() throws CloneNotSupportedException
 	{
-		return true;
+		for (OWLIndividual node : nodes) {
+			
+			HashSet<OWLClassExpression> labels = nodeLabels.get(node);
+			for (OWLClassExpression exp :labels) {
+				if (!(exp instanceof OWLObjectUnionOf)) continue;
+				
+				OWLObjectUnionOf obj = (OWLObjectUnionOf) exp;
+				Set<OWLClassExpression> unionMembers = obj.getOperands(); // not sure about the method
+				
+				boolean memberAlreadyPresentInLabels = false;
+				for (OWLClassExpression m: unionMembers) 
+					if (labels.contains(m)) {
+						memberAlreadyPresentInLabels = true;
+						break;
+					}
+					
+				if (memberAlreadyPresentInLabels) continue; 
+				
+				for (OWLClassExpression m: unionMembers) {
+					Tableau newTableau = clone();
+					newTableau.add(node, m);
+					//newTableau.nodeLabels.get(node).add(m);
+					if (newTableau.check())
+						return true;
+				}
+				
+				
+			}
+		}
+		return false;
 	}
 	
 	void add(OWLIndividual indi, OWLClassExpression exp)
@@ -193,6 +233,24 @@ public class Tableau {
 	boolean forallRule(OWLIndividual node)
 	{
 		boolean changed = false;
+		
+		HashMap<OWLObjectProperty, HashSet<OWLClassExpression> > toAdd = new HashMap<OWLObjectProperty, HashSet<OWLClassExpression>>();
+		
+		for (OWLClassExpression exp : nodeLabels.get(node)) {
+			if (!(exp instanceof OWLObjectAllValuesFrom)) continue;
+			OWLObjectAllValuesFrom restr = (OWLObjectAllValuesFrom) exp;
+			OWLObjectPropertyExpression role = restr.getProperty();
+			OWLClassExpression filler = restr.getFiller(); // D
+			HashSet<OWLIndividual> objects = edges.get(node).get(role);
+				
+			for (OWLIndividual child: objects) {
+				if (!nodeLabels.get(child).contains(filler)) {
+					//todo add all in toAddbefore adding it to the child
+					nodeLabels.get(child).add(filler);
+					changed = true;
+				}
+			}			
+		}
 		return changed;
 	}
 	
@@ -236,7 +294,17 @@ public class Tableau {
 	
 	// And rule
 	boolean andRule(OWLIndividual node){
-			return false;
+		HashSet<OWLClassExpression> toAdd = new HashSet<OWLClassExpression>();
+		for (OWLClassExpression exp : nodeLabels.get(node))
+			if (exp instanceof OWLObjectIntersectionOf) {
+				OWLObjectIntersectionOf intersection = (OWLObjectIntersectionOf) exp;
+				Set<OWLClassExpression> intersectionMembers =  intersection.asConjunctSet();
+				for (OWLClassExpression im : intersectionMembers) 
+					if (!nodeLabels.get(node).contains(im))
+						toAdd.add(im);
+			}
+		nodeLabels.get(node).addAll(toAdd);
+		return toAdd.size() != 0;
 	}
 
 	@Override
