@@ -17,48 +17,60 @@ import org.semanticweb.owlapi.model.OWLObjectUnionOf;
 import org.semanticweb.owlapi.model.OWLOntology;
 
 public class Tableau {
-    Set<OWLOntology> ontologies;
-    OWLDataFactory factory;
-    ArrayList<OWLIndividual> nodes = new ArrayList<OWLIndividual>();
-    HashSet<OWLIndividual> blocked = new HashSet<OWLIndividual>();
+    private Set<OWLOntology> ontologies;
+    private OWLDataFactory factory;
+    private ArrayList<OWLIndividual> nodes = new ArrayList<>();
+    private HashSet<OWLIndividual> blocked = new HashSet<>();
 
-    HashMap<OWLIndividual, HashSet<OWLClassExpression>> nodeLabels = new HashMap<OWLIndividual, HashSet<OWLClassExpression>>();
-    HashMap<OWLIndividual, HashMap<OWLObjectProperty, HashSet<OWLIndividual>>> edges = new HashMap<OWLIndividual, HashMap<OWLObjectProperty, HashSet<OWLIndividual>>>();
+    private HashMap<OWLIndividual, HashSet<OWLClassExpression>> nodeLabels = new HashMap<>();
+    private HashMap<OWLIndividual, HashMap<OWLObjectProperty, HashSet<OWLIndividual>>> edges = new HashMap<>();
 
     public Tableau() {
-
     }
 
+    /*
+     * SETUP
+     * */
     public Tableau(Set<OWLOntology> ontologies, OWLDataFactory factory) {
         this.ontologies = ontologies;
         this.factory = factory;
-        for (OWLOntology ontology : ontologies) {
-            for (OWLNamedIndividual indi : ontology.getIndividualsInSignature()) {
-                HashSet<OWLClassExpression> labels = nodeLabels.get(indi);
-                if (labels == null) {
-                    labels = new HashSet<OWLClassExpression>();
-                    nodes.add(indi);
-                    nodeLabels.put(indi, labels);
-                    for (OWLClassExpression exp : indi.getTypes(ontologies))
-                        labels.add(exp.getNNF());
-                    HashMap<OWLObjectProperty, HashSet<OWLIndividual>> relations = new HashMap<OWLObjectProperty, HashSet<OWLIndividual>>();
-                    edges.put(indi, relations);
-                    for (OWLOntology onto : ontologies)
-                        for (Entry<OWLObjectPropertyExpression, Set<OWLIndividual>> entry : indi.getObjectPropertyValues(onto).entrySet()) {
-                            HashSet<OWLIndividual> objects = relations.get(entry.getKey().asOWLObjectProperty());
-                            if (objects == null) {
-                                objects = new HashSet<OWLIndividual>();
-                                relations.put(entry.getKey().asOWLObjectProperty(), objects);
-                            }
-                            objects.addAll(entry.getValue());
-                        }
+        for (OWLOntology ontology : ontologies)
+            for (OWLNamedIndividual i : ontology.getIndividualsInSignature())
+                setupIndividual(i);
+    }
 
 
+    private void setupIndividual(OWLNamedIndividual indi) {
+        if (alreadyInitialized(indi)) return;
+        setupIndividialLabels(indi);
+        setupIndividialProperties(indi);
+    }
+
+    private Boolean alreadyInitialized(OWLNamedIndividual indi) {
+        return nodeLabels.get(indi) != null;
+    }
+
+    private void setupIndividialLabels(OWLNamedIndividual indi) {
+        HashSet<OWLClassExpression> labels = new HashSet<>();
+        nodes.add(indi);
+        nodeLabels.put(indi, labels);
+        //insert all the types of this individual in its array
+        for (OWLClassExpression exp : indi.getTypes(ontologies))
+            labels.add(exp.getNNF());
+    }
+
+    private void setupIndividialProperties(OWLNamedIndividual indi) {
+        HashMap<OWLObjectProperty, HashSet<OWLIndividual>> relations = new HashMap<>();
+        edges.put(indi, relations);
+        for (OWLOntology onto : ontologies)
+            for (Entry<OWLObjectPropertyExpression, Set<OWLIndividual>> entry : indi.getObjectPropertyValues(onto).entrySet()) {
+                HashSet<OWLIndividual> objects = relations.get(entry.getKey().asOWLObjectProperty());
+                if (objects == null) {
+                    objects = new HashSet<OWLIndividual>();
+                    relations.put(entry.getKey().asOWLObjectProperty(), objects);
                 }
-
-
+                objects.addAll(entry.getValue());
             }
-        }
     }
 
     public boolean check() throws CloneNotSupportedException {
@@ -136,36 +148,34 @@ public class Tableau {
     // OR rule
 
     boolean orRule() throws CloneNotSupportedException {
-        for (OWLIndividual node : nodes) {
+        for (OWLIndividual node : nodes)
+            if (orRule(node)) return true;
+        return false;
+    }
 
-            HashSet<OWLClassExpression> labels = nodeLabels.get(node);
-            for (OWLClassExpression exp : labels) {
-                if (!(exp instanceof OWLObjectUnionOf)) continue;
+    private boolean orRule(OWLIndividual node) throws CloneNotSupportedException {
+        HashSet<OWLClassExpression> thisNodeLabels = nodeLabels.get(node);
+        for (OWLClassExpression exp : thisNodeLabels) {
+            if (!(exp instanceof OWLObjectUnionOf)) continue;
 
-                OWLObjectUnionOf obj = (OWLObjectUnionOf) exp;
-                Set<OWLClassExpression> unionMembers = obj.getOperands(); // not sure about the method
+            OWLObjectUnionOf obj = (OWLObjectUnionOf) exp;
+            Set<OWLClassExpression> unionMembers = obj.getOperands();
 
-                boolean memberAlreadyPresentInLabels = false;
-                for (OWLClassExpression m : unionMembers)
-                    if (labels.contains(m)) {
-                        memberAlreadyPresentInLabels = true;
-                        break;
-                    }
+            if (hasElementsInCommon(thisNodeLabels, unionMembers))
+                continue;
 
-                if (memberAlreadyPresentInLabels) continue;
-
-                for (OWLClassExpression m : unionMembers) {
-                    Tableau newTableau = clone();
-                    newTableau.add(node, m);
-                    //newTableau.nodeLabels.get(node).add(m);
-                    if (newTableau.check())
-                        return true;
-                }
-
-
+            for (OWLClassExpression m : unionMembers) {
+                Tableau newTableau = clone();
+                newTableau.add(node, m);
+                if (newTableau.check())
+                    return true;
             }
         }
         return false;
+    }
+
+    private boolean hasElementsInCommon(Set<OWLClassExpression> node, Set<OWLClassExpression> members) {
+        return !Collections.disjoint(nodeLabels.get(node), members);
     }
 
     void add(OWLIndividual indi, OWLClassExpression exp) {
@@ -174,7 +184,7 @@ public class Tableau {
             labels = new HashSet<OWLClassExpression>();
             nodes.add(indi);
             nodeLabels.put(indi, labels);
-            HashMap<OWLObjectProperty, HashSet<OWLIndividual>> relations = new HashMap<OWLObjectProperty, HashSet<OWLIndividual>>();
+            HashMap<OWLObjectProperty, HashSet<OWLIndividual>> relations = new HashMap<>();
             edges.put(indi, relations);
         }
         labels.add(exp.getNNF());
@@ -214,23 +224,27 @@ public class Tableau {
     boolean forallRule(OWLIndividual node) {
         boolean changed = false;
 
-        HashMap<OWLObjectProperty, HashSet<OWLClassExpression>> toAdd = new HashMap<OWLObjectProperty, HashSet<OWLClassExpression>>();
+        HashMap<OWLIndividual, HashSet<OWLClassExpression>> toAdd = new HashMap<>();
 
-        for (OWLClassExpression exp : nodeLabels.get(node)) {
-            if (!(exp instanceof OWLObjectAllValuesFrom)) continue;
-            OWLObjectAllValuesFrom restr = (OWLObjectAllValuesFrom) exp;
-            OWLObjectPropertyExpression role = restr.getProperty();
-            OWLClassExpression filler = restr.getFiller(); // D
-            HashSet<OWLIndividual> objects = edges.get(node).get(role);
+        for (OWLClassExpression exp : nodeLabels.get(node))
+            if (exp instanceof OWLObjectAllValuesFrom) {
+                OWLObjectAllValuesFrom restr = (OWLObjectAllValuesFrom) exp;
+                OWLObjectPropertyExpression role = restr.getProperty(); // R
+                OWLClassExpression filler = restr.getFiller(); // D
+                HashSet<OWLIndividual> destinationIndividial = edges.get(node).get(role.asOWLObjectProperty());
 
-            for (OWLIndividual child : objects) {
-                if (!nodeLabels.get(child).contains(filler)) {
-                    //todo add all in toAddbefore adding it to the child
-                    nodeLabels.get(child).add(filler);
-                    changed = true;
+                for (OWLIndividual child : destinationIndividial) {
+                    toAdd.putIfAbsent(child, new HashSet<>());
+                    if (!nodeLabels.get(child).contains(filler)) {
+                        toAdd.get(child).add(filler);
+                        changed = true;
+                    }
                 }
             }
-        }
+
+        toAdd.forEach((k, v) -> nodeLabels.get(k).addAll(v));
+
+
         return changed;
     }
 
