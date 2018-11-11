@@ -122,7 +122,6 @@ public class Tableau {
 
     // check offspring nodes for blocking
     void checkBlock(OWLIndividual blockingNode, OWLIndividual blockedParent) {
-        //todo to check
         for (Map.Entry<OWLObjectProperty, HashSet<OWLIndividual>> edge : edges.get(blockedParent).entrySet()) {
             for (OWLIndividual child : edge.getValue())
                 if (!blocked.contains(child) && isSubsumed(child, blockingNode))
