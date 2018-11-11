@@ -15,13 +15,14 @@ import org.semanticweb.owlapi.model.OWLOntologyManager;
 import org.semanticweb.owlapi.model.OWLSubClassOfAxiom;
 
 import eu.abdn.owlaip3.tableau.reasoner.alc.ALCReasoner;
+import org.semanticweb.owlapi.reasoner.OWLReasoner;
 
 public class GCIExample {
 
     public static void main(String[] args) throws IOException, OWLOntologyCreationException, CloneNotSupportedException {
 
         OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
-        File file = new File("GCIExample.owl");
+        File file = new File("owl_test_files/GCIExample.owl");
         OWLOntology ontology = manager.loadOntologyFromOntologyDocument(file);
         ALCReasoner reasoner = new ALCReasoner(manager, ontology);
 
@@ -31,7 +32,7 @@ public class GCIExample {
         OWLClass Person = factory.getOWLClass(IRI.create("http://www.abdn.ac.uk/cs3019/GCIExample.owl#Person"));
         OWLClassAssertionAxiom axiom = factory.getOWLClassAssertionAxiom(Person, Bill);
         if (reasoner.isEntailed(axiom))
-            System.out.println("The class asseretion is entailed!");
+            System.out.println("The class assertion is entailed!");
         else
             System.out.println("The class assertion is not entailed!");
     }

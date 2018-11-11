@@ -104,7 +104,6 @@ public class Tableau {
         }
 
         // OR rule
-
         return orRule();
     }
 
@@ -147,7 +146,7 @@ public class Tableau {
 
             OWLObjectUnionOf obj = (OWLObjectUnionOf) exp;
             Set<OWLClassExpression> unionMembers = obj.getOperands();
-
+       // obj.asDisjunctSet()
             if (hasElementsInCommon(thisNodeLabels, unionMembers))
                 continue;
 

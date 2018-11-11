@@ -15,23 +15,23 @@ import org.semanticweb.owlapi.model.OWLSubClassOfAxiom;
 import eu.abdn.owlaip3.tableau.reasoner.alc.ALCReasoner;
 
 public class SubsumptionCheckingExample {
-	
-	public static void main(String[] args) throws IOException, OWLOntologyCreationException, CloneNotSupportedException {
-		
-		OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
-		File file = new File("subsumptionCheckingExample.owl");
-		OWLOntology ontology = manager.loadOntologyFromOntologyDocument(file);
-		ALCReasoner reasoner = new ALCReasoner(manager, ontology);
-		
-		OWLDataFactory factory = manager.getOWLDataFactory();
 
-		OWLClass Person = factory.getOWLClass(IRI.create("http://www.abdn.ac.uk/cs3019/subsumptionCheckingExample.owl#Person"));
-		OWLClass Confucian = manager.getOWLDataFactory().getOWLClass(IRI.create("http://www.abdn.ac.uk/cs3019/subsumptionCheckingExample.owl#Confucian"));
-		OWLSubClassOfAxiom axiom = factory.getOWLSubClassOfAxiom(Confucian, Person);
-		if(reasoner.isEntailed(axiom))
-		System.out.println("The subsumption is entailed!");
-		else
-			System.out.println("The subsumption is not entailed!");
-	}
+    public static void main(String[] args) throws IOException, OWLOntologyCreationException, CloneNotSupportedException {
+
+        OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
+        File file = new File("owl_test_files/subsumptionCheckingExample.owl");
+        OWLOntology ontology = manager.loadOntologyFromOntologyDocument(file);
+        ALCReasoner reasoner = new ALCReasoner(manager, ontology);
+
+        OWLDataFactory factory = manager.getOWLDataFactory();
+
+        OWLClass Person = factory.getOWLClass(IRI.create("http://www.abdn.ac.uk/cs3019/subsumptionCheckingExample.owl#Person"));
+        OWLClass Confucian = manager.getOWLDataFactory().getOWLClass(IRI.create("http://www.abdn.ac.uk/cs3019/subsumptionCheckingExample.owl#Confucian"));
+        OWLSubClassOfAxiom axiom = factory.getOWLSubClassOfAxiom(Confucian, Person);
+        if (reasoner.isEntailed(axiom))
+            System.out.println("The subsumption is entailed!");
+        else
+            System.out.println("The subsumption is not entailed!");
+    }
 
 }

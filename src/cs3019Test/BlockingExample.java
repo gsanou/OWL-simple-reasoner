@@ -17,7 +17,7 @@ public class BlockingExample {
     public static void main(String[] args) throws IOException, OWLOntologyCreationException, CloneNotSupportedException {
 
         OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
-        File file = new File("blockingExample.owl");
+        File file = new File("owl_test_files/blockingExample.owl");
         OWLOntology ontology = manager.loadOntologyFromOntologyDocument(file);
         ALCReasoner reasoner = new ALCReasoner(manager, ontology);
 
