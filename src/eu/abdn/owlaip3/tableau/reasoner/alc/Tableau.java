@@ -3,18 +3,7 @@ package eu.abdn.owlaip3.tableau.reasoner.alc;
 import java.util.*;
 import java.util.Map.Entry;
 
-import org.semanticweb.owlapi.model.OWLClass;
-import org.semanticweb.owlapi.model.OWLClassExpression;
-import org.semanticweb.owlapi.model.OWLDataFactory;
-import org.semanticweb.owlapi.model.OWLIndividual;
-import org.semanticweb.owlapi.model.OWLNamedIndividual;
-import org.semanticweb.owlapi.model.OWLObjectAllValuesFrom;
-import org.semanticweb.owlapi.model.OWLObjectIntersectionOf;
-import org.semanticweb.owlapi.model.OWLObjectProperty;
-import org.semanticweb.owlapi.model.OWLObjectPropertyExpression;
-import org.semanticweb.owlapi.model.OWLObjectSomeValuesFrom;
-import org.semanticweb.owlapi.model.OWLObjectUnionOf;
-import org.semanticweb.owlapi.model.OWLOntology;
+import org.semanticweb.owlapi.model.*;
 
 public class Tableau {
     private Set<OWLOntology> ontologies;
@@ -79,7 +68,7 @@ public class Tableau {
             int index = 0;
             OWLIndividual next;
             changed = false;
-            do {
+            while (index < nodes.size()) {
                 next = nodes.get(index++);
                 if (blocked.contains(next))
                     continue;
@@ -105,14 +94,13 @@ public class Tableau {
                 if (existsRule(next))
                     changed = true;
 
+                if (gci())
+                    changed = true;
+
                 // block offspring nodes
                 if (!(next instanceof OWLNamedIndividual))
                     checkBlock(next, next);
-
-
             }
-            while (index < nodes.size());
-
         }
 
         // OR rule
@@ -121,7 +109,7 @@ public class Tableau {
     }
 
     // check offspring nodes for blocking
-    void checkBlock(OWLIndividual blockingNode, OWLIndividual blockedParent) {
+    private void checkBlock(OWLIndividual blockingNode, OWLIndividual blockedParent) {
         for (Map.Entry<OWLObjectProperty, HashSet<OWLIndividual>> edge : edges.get(blockedParent).entrySet()) {
             for (OWLIndividual child : edge.getValue())
                 if (!blocked.contains(child) && isSubsumed(child, blockingNode))
@@ -131,12 +119,12 @@ public class Tableau {
         }
     }
 
-    Boolean isSubsumed(OWLIndividual child, OWLIndividual parent) {
+    private Boolean isSubsumed(OWLIndividual child, OWLIndividual parent) {
         return nodeLabels.get(parent).containsAll(nodeLabels.get(child));
     }
 
     // blocking offspring nodes
-    void block(OWLIndividual node) {
+    private void block(OWLIndividual node) {
         blocked.add(node);
         for (Entry<OWLObjectProperty, HashSet<OWLIndividual>> objects : edges.get(node).entrySet())
             for (OWLIndividual child : objects.getValue())
@@ -146,7 +134,7 @@ public class Tableau {
 
     // OR rule
 
-    boolean orRule() throws CloneNotSupportedException {
+    private boolean orRule() throws CloneNotSupportedException {
         for (OWLIndividual node : nodes)
             if (orRule(node)) return true;
         return false;
@@ -174,7 +162,7 @@ public class Tableau {
     }
 
     private boolean hasElementsInCommon(Set<OWLClassExpression> node, Set<OWLClassExpression> members) {
-        return !Collections.disjoint(nodeLabels.get(node), members);
+        return !Collections.disjoint(node, members);
     }
 
     void add(OWLIndividual indi, OWLClassExpression exp) {
@@ -193,7 +181,7 @@ public class Tableau {
 
     // EXISTS rule
 
-    boolean existsRule(OWLIndividual node) {
+    private boolean existsRule(OWLIndividual node) {
         boolean changed = false;
         for (OWLClassExpression exp : nodeLabels.get(node))
             if (exp instanceof OWLObjectSomeValuesFrom) {
@@ -220,14 +208,14 @@ public class Tableau {
     }
 
     // FORALL rule
-    boolean forallRule(OWLIndividual node) {
+    private boolean forallRule(OWLIndividual node) {
         boolean changed = false;
 
-        HashMap<OWLIndividual, HashSet<OWLClassExpression>> toAdd = new HashMap<>();
+        var toAdd = new HashMap<OWLIndividual, HashSet<OWLClassExpression>>();
 
         for (OWLClassExpression exp : nodeLabels.get(node))
             if (exp instanceof OWLObjectAllValuesFrom) {
-                OWLObjectAllValuesFrom restr = (OWLObjectAllValuesFrom) exp;
+                var restr = (OWLObjectAllValuesFrom) exp;
                 OWLObjectPropertyExpression role = restr.getProperty(); // R
                 OWLClassExpression filler = restr.getFiller(); // D
                 HashSet<OWLIndividual> destinationIndividial = edges.get(node).get(role.asOWLObjectProperty());
@@ -248,7 +236,7 @@ public class Tableau {
     }
 
     // SUB rule
-    boolean subRule(OWLIndividual node) {
+    private boolean subRule(OWLIndividual node) {
         boolean changed = false;
         HashSet<OWLClassExpression> labels = nodeLabels.get(node);
 
@@ -270,7 +258,7 @@ public class Tableau {
     }
 
     // detect clash
-    boolean clash(OWLIndividual node) {
+    private boolean clash(OWLIndividual node) {
         HashSet<OWLClassExpression> labels = nodeLabels.get(node);
         if (labels.contains(factory.getOWLNothing()))
             return true;
@@ -281,11 +269,11 @@ public class Tableau {
     }
 
     // And rule
-    boolean andRule(OWLIndividual node) {
-        HashSet<OWLClassExpression> toAdd = new HashSet<OWLClassExpression>();
+    private boolean andRule(OWLIndividual node) {
+        var toAdd = new HashSet<OWLClassExpression>();
         for (OWLClassExpression exp : nodeLabels.get(node))
             if (exp instanceof OWLObjectIntersectionOf) {
-                OWLObjectIntersectionOf intersection = (OWLObjectIntersectionOf) exp;
+                var intersection = (OWLObjectIntersectionOf) exp;
                 Set<OWLClassExpression> intersectionMembers = intersection.asConjunctSet();
                 for (OWLClassExpression im : intersectionMembers)
                     if (!nodeLabels.get(node).contains(im))
@@ -293,6 +281,26 @@ public class Tableau {
             }
         nodeLabels.get(node).addAll(toAdd);
         return toAdd.size() != 0;
+    }
+
+    private boolean gci() {
+        boolean changed = false;
+        for (OWLOntology o : ontologies) {
+            for (OWLSubClassOfAxiom subClassOfAxiom : o.getAxioms(AxiomType.SUBCLASS_OF)) {
+                OWLClassExpression sub = subClassOfAxiom.getSubClass();
+                OWLClassExpression sup = subClassOfAxiom.getSuperClass();
+                if (!sub.isClassExpressionLiteral()) {
+                    OWLObjectUnionOf newConstraint = factory.getOWLObjectUnionOf(sup, sub.getComplementNNF());
+                    addToEveryIndividual(newConstraint);
+                    changed = true;
+                }
+            }
+        }
+        return changed;
+    }
+
+    private void addToEveryIndividual(OWLObjectUnionOf newConstraint) {
+        for (OWLIndividual i : nodes) nodeLabels.get(i).add(newConstraint);
     }
 
     @Override

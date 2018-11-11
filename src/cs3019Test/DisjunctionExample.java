@@ -20,7 +20,7 @@ public class DisjunctionExample {
 	public static void main(String[] args) throws IOException, OWLOntologyCreationException, CloneNotSupportedException {
 		
 		OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
-		File file = new File("SubsumptionCheckingExample.owl");
+		File file = new File("subsumptionCheckingExample.owl");
 		OWLOntology ontology = manager.loadOntologyFromOntologyDocument(file);
 		ALCReasoner reasoner = new ALCReasoner(manager, ontology);
 		

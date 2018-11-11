@@ -26,11 +26,6 @@ public class BlockingExample {
             System.out.println("The concept is satisfiable!");
         else
             System.out.println("The concept is unsatisfiable!");
-
-        if (reasoner.isConsistent())
-            System.out.println("The ontology is consistent!");
-        else
-            System.out.println("The concept is not consistent!");
     }
 
 }
