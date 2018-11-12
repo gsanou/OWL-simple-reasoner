@@ -134,31 +134,30 @@ public class Tableau {
     // OR rule
 
     private boolean orRule() throws CloneNotSupportedException {
-        for (OWLIndividual node : nodes)
-            if (orRule(node)) return true;
-        return false;
-    }
+        boolean applied = false;
+        for (OWLIndividual node : nodes) {
+            HashSet<OWLClassExpression> thisNodeLabels = nodeLabels.get(node);
+            for (OWLClassExpression exp : thisNodeLabels) {
+                if (!(exp instanceof OWLObjectUnionOf)) continue;
 
-    private boolean orRule(OWLIndividual node) throws CloneNotSupportedException {
-        HashSet<OWLClassExpression> thisNodeLabels = nodeLabels.get(node);
-        for (OWLClassExpression exp : thisNodeLabels) {
-            if (!(exp instanceof OWLObjectUnionOf)) continue;
+                OWLObjectUnionOf obj = (OWLObjectUnionOf) exp;
+                Set<OWLClassExpression> unionMembers = obj.getOperands();
+                // obj.asDisjunctSet()
+                if (hasElementsInCommon(thisNodeLabels, unionMembers))
+                    continue;
 
-            OWLObjectUnionOf obj = (OWLObjectUnionOf) exp;
-            Set<OWLClassExpression> unionMembers = obj.getOperands();
-       // obj.asDisjunctSet()
-            if (hasElementsInCommon(thisNodeLabels, unionMembers))
-                continue;
-
-            for (OWLClassExpression m : unionMembers) {
-                Tableau newTableau = clone();
-                newTableau.add(node, m);
-                if (newTableau.check())
-                    return true;
+                for (OWLClassExpression m : unionMembers) {
+                    applied = true;
+                    Tableau newTableau = clone();
+                    newTableau.add(node, m);
+                    if (newTableau.check())
+                        return true;
+                }
             }
         }
-        return false;
+        return !applied;
     }
+
 
     private boolean hasElementsInCommon(Set<OWLClassExpression> node, Set<OWLClassExpression> members) {
         return !Collections.disjoint(node, members);
