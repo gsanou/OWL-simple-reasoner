@@ -3,6 +3,7 @@ package eu.abdn.owlaip3.tableau.reasoner.alc;
 import java.util.*;
 import java.util.Map.Entry;
 
+import org.coode.owlapi.obo.renderer.OBOStorageException;
 import org.semanticweb.owlapi.model.*;
 
 public class Tableau {
@@ -94,6 +95,7 @@ public class Tableau {
                 if (existsRule(next))
                     changed = true;
 
+
                 if (gci())
                     changed = true;
 
@@ -106,6 +108,7 @@ public class Tableau {
         // OR rule
         return orRule();
     }
+
 
     // check offspring nodes for blocking
     private void checkBlock(OWLIndividual blockingNode, OWLIndividual blockedParent) {
@@ -141,7 +144,7 @@ public class Tableau {
                 if (!(exp instanceof OWLObjectUnionOf)) continue;
 
                 OWLObjectUnionOf obj = (OWLObjectUnionOf) exp;
-                Set<OWLClassExpression> unionMembers = obj.getOperands();
+                Set<OWLClassExpression> unionMembers = exp.asDisjunctSet();
                 // obj.asDisjunctSet()
                 if (hasElementsInCommon(thisNodeLabels, unionMembers))
                     continue;
@@ -233,6 +236,7 @@ public class Tableau {
         return changed;
     }
 
+
     // SUB rule
     private boolean subRule(OWLIndividual node) {
         boolean changed = false;
@@ -248,6 +252,12 @@ public class Tableau {
                         changed = true;
                     }
                 }
+             /*   for (OWLClassExpression equivalent : atomic.getEquivalentClasses(ontologies)){
+                    if (!labels.contains(equivalent.getNNF())) {
+                        toAdd.add(equivalent.getNNF());
+                        changed = true;
+                    }
+                }*/
             }
 
         labels.addAll(toAdd);
@@ -284,22 +294,49 @@ public class Tableau {
     private boolean gci() {
         boolean changed = false;
         for (OWLOntology o : ontologies) {
-            for (OWLSubClassOfAxiom subClassOfAxiom : o.getAxioms(AxiomType.SUBCLASS_OF)) {
-                OWLClassExpression sub = subClassOfAxiom.getSubClass();
-                OWLClassExpression sup = subClassOfAxiom.getSuperClass();
-                if (!sub.isClassExpressionLiteral()) {
-                    OWLObjectUnionOf newConstraint = factory.getOWLObjectUnionOf(sup, sub.getComplementNNF());
-                    addToEveryIndividual(newConstraint);
-                    changed = true;
+            // var generalClassAxionms = o.getGeneralClassAxioms();
+            for (OWLAxiom ax : o.getAxioms()) {
+                /*if (ax instanceof OWLSubClassOfAxiom) {
+                    var subAx = (OWLSubClassOfAxiom) ax;
+                    OWLClassExpression sub = subAx.getSubClass();
+                    OWLClassExpression sup = subAx.getSuperClass();
+                    if (!sub.isClassExpressionLiteral()) {
+                        OWLObjectUnionOf newConstraint = factory.getOWLObjectUnionOf(sup, sub.getComplementNNF());
+                        addToEveryIndividual(newConstraint);
+                        changed = true;
+                    }
+                }*/
+                if (ax instanceof OWLEquivalentClassesAxiom) {
+                    var eqAx = (OWLEquivalentClassesAxiom) ax;
+                    Set<OWLClassExpression> classes = eqAx.getClassExpressions();
+                    OWLClassExpression C = null;
+                    OWLClassExpression D = null;
+
+                    for (OWLClassExpression i : classes) {
+                        if (i.isClassExpressionLiteral()) D = i;
+                        else C = i;
+                    }
+                    if (C == null || D == null) continue;
+                    OWLObjectUnionOf newConstraint = factory.getOWLObjectUnionOf(D, C.getComplementNNF());
+
+                    for (OWLIndividual i : nodes)
+                        if (!nodeLabels.get(i).contains(newConstraint)) {
+                            nodeLabels.get(i).add(newConstraint);
+                            changed = true;
+                        }
+
+
                 }
+               /* if (ax instanceof OWLDisjointClassesAxiom) {
+                    //todo
+                }*/
+
+
             }
         }
         return changed;
     }
 
-    private void addToEveryIndividual(OWLObjectUnionOf newConstraint) {
-        for (OWLIndividual i : nodes) nodeLabels.get(i).add(newConstraint);
-    }
 
     @Override
     protected Tableau clone() throws CloneNotSupportedException {
