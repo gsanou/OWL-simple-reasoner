@@ -1,0 +1,62 @@
+#
+# Copyright World Wide Web Consortium, (Massachusetts Institute of
+# Technology, European Research Consortium for Informatics and
+# Mathematics, Keio University).
+#
+# All Rights Reserved.
+#
+# Please see the full Copyright clause at
+# <http://www.w3.org/Consortium/Legal/copyright-software.html>
+#
+# Author: Sean Bechhofer
+#
+# Description: 
+#
+# DL Test: t7.3
+#
+<http://www.w3.org/2002/03owlt/description-logic/inconsistent630> rdf:type owl:Ontology .
+oiled:p1.comp rdf:type owl:Class .
+_:a rdf:type owl:Restriction .
+first:P.1 rdf:type owl:DatatypeProperty .
+_:a owl:onProperty first:P.1 .
+_:a owl:minCardinality "1"^^xsd:int  .
+oiled:p1.comp owl:equivalentClass _:a .
+first:A.2 rdf:type owl:Class .
+oiled:p1 rdf:type owl:Class .
+_:c rdf:type owl:Restriction .
+oiled:invF rdf:type owl:ObjectProperty .
+_:c owl:onProperty oiled:invF .
+first:V.3 rdf:type owl:Class .
+_:c owl:someValuesFrom first:V.3 .
+_:e rdf:first _:c .
+_:e rdf:rest rdf:nil .
+_:g rdf:first oiled:p1 .
+_:g rdf:rest _:e .
+first:A.2 owl:intersectionOf _:g .
+oiled:Unsatisfiable rdf:type owl:Class .
+_:i rdf:type owl:Restriction .
+oiled:f rdf:type owl:ObjectProperty .
+_:i owl:onProperty oiled:f .
+_:i owl:someValuesFrom first:A.2 .
+oiled:Unsatisfiable owl:equivalentClass _:i .
+first:V.3 rdf:type owl:Class .
+_:k rdf:type owl:Restriction .
+_:k owl:onProperty oiled:f .
+_:k owl:someValuesFrom oiled:p1.comp .
+first:V.3 owl:equivalentClass _:k .
+oiled:p1 rdf:type owl:Class .
+_:m rdf:type owl:Restriction .
+_:m owl:onProperty first:P.1 .
+_:m owl:maxCardinality "0"^^xsd:int  .
+oiled:p1 owl:equivalentClass _:m .
+oiled:invF rdf:type owl:ObjectProperty .
+oiled:invF owl:inverseOf oiled:f .
+oiled:r rdf:type owl:ObjectProperty .
+oiled:r rdf:type owl:TransitiveProperty .
+oiled:invR rdf:type owl:ObjectProperty .
+oiled:invR owl:inverseOf oiled:r .
+_:o rdf:type oiled:Unsatisfiable .
+_:q rdf:type owl:Restriction .
+_:q owl:onProperty oiled:f .
+_:q owl:maxCardinality "1"^^xsd:nonNegativeInteger  .
+owl:Thing rdfs:subClassOf _:q .

@@ -1,0 +1,113 @@
+#
+# Copyright World Wide Web Consortium, (Massachusetts Institute of
+# Technology, European Research Consortium for Informatics and
+# Mathematics, Keio University).
+#
+# All Rights Reserved.
+#
+# Please see the full Copyright clause at
+# <http://www.w3.org/Consortium/Legal/copyright-software.html>
+#
+# Author: Sean Bechhofer
+#
+# Description: 
+#
+# DL Test: k_poly
+# ABox test from DL98 systems comparison.
+#
+oiled:V16457 rdf:type owl:Thing .
+oiled:C38 rdf:type owl:Class .
+oiled:V16457 rdf:type oiled:C38 .
+oiled:V16440 rdf:type owl:Thing .
+oiled:C98 rdf:type owl:Class .
+oiled:V16440 rdf:type oiled:C98 .
+oiled:V16440 rdf:type owl:Thing .
+oiled:C82 rdf:type owl:Class .
+oiled:V16440 rdf:type oiled:C82 .
+oiled:V16440 rdf:type owl:Thing .
+oiled:C80 rdf:type owl:Class .
+oiled:V16440 rdf:type oiled:C80 .
+oiled:V16461 rdf:type owl:Thing .
+oiled:C56 rdf:type owl:Class .
+oiled:V16461 rdf:type oiled:C56 .
+oiled:V16461 rdf:type owl:Thing .
+oiled:C44 rdf:type owl:Class .
+oiled:V16461 rdf:type oiled:C44 .
+oiled:V16461 rdf:type owl:Thing .
+oiled:C42 rdf:type owl:Class .
+oiled:V16461 rdf:type oiled:C42 .
+oiled:V16464 rdf:type owl:Thing .
+oiled:C56 rdf:type owl:Class .
+oiled:V16464 rdf:type oiled:C56 .
+oiled:V16464 rdf:type owl:Thing .
+oiled:C44 rdf:type owl:Class .
+oiled:V16464 rdf:type oiled:C44 .
+oiled:V16464 rdf:type owl:Thing .
+oiled:C42 rdf:type owl:Class .
+oiled:V16464 rdf:type oiled:C42 .
+oiled:V16455 rdf:type owl:Thing .
+oiled:C56 rdf:type owl:Class .
+oiled:V16455 rdf:type oiled:C56 .
+oiled:V16455 rdf:type owl:Thing .
+oiled:C44 rdf:type owl:Class .
+oiled:V16455 rdf:type oiled:C44 .
+oiled:V16455 rdf:type owl:Thing .
+oiled:C42 rdf:type owl:Class .
+oiled:V16455 rdf:type oiled:C42 .
+oiled:V16462 rdf:type owl:Thing .
+oiled:C38 rdf:type owl:Class .
+oiled:V16462 rdf:type oiled:C38 .
+oiled:V16453 rdf:type owl:Thing .
+oiled:C76 rdf:type owl:Class .
+oiled:V16453 rdf:type oiled:C76 .
+oiled:V16453 rdf:type owl:Thing .
+oiled:C62 rdf:type owl:Class .
+oiled:V16453 rdf:type oiled:C62 .
+oiled:V16453 rdf:type owl:Thing .
+oiled:C60 rdf:type owl:Class .
+oiled:V16453 rdf:type oiled:C60 .
+oiled:V16465 rdf:type owl:Thing .
+oiled:C38 rdf:type owl:Class .
+oiled:V16465 rdf:type oiled:C38 .
+oiled:V16460 rdf:type owl:Thing .
+oiled:C38 rdf:type owl:Class .
+oiled:V16460 rdf:type oiled:C38 .
+oiled:V16463 rdf:type owl:Thing .
+oiled:C76 rdf:type owl:Class .
+oiled:V16463 rdf:type oiled:C76 .
+oiled:V16463 rdf:type owl:Thing .
+oiled:C62 rdf:type owl:Class .
+oiled:V16463 rdf:type oiled:C62 .
+oiled:V16463 rdf:type owl:Thing .
+oiled:C60 rdf:type owl:Class .
+oiled:V16463 rdf:type oiled:C60 .
+oiled:V16459 rdf:type owl:Thing .
+oiled:C34 rdf:type owl:Class .
+oiled:V16459 rdf:type oiled:C34 .
+oiled:V16459 rdf:type owl:Thing .
+oiled:C68 rdf:type owl:Class .
+oiled:V16459 rdf:type oiled:C68 .
+oiled:V16459 rdf:type owl:Thing .
+oiled:C88 rdf:type owl:Class .
+oiled:V16459 rdf:type oiled:C88 .
+oiled:V16459 rdf:type owl:Thing .
+oiled:C50 rdf:type owl:Class .
+oiled:V16459 rdf:type oiled:C50 .
+oiled:V16448 rdf:type owl:Thing .
+oiled:C38 rdf:type owl:Class .
+oiled:V16448 rdf:type oiled:C38 .
+oiled:V16439 rdf:type owl:Thing .
+oiled:C130 rdf:type owl:Class .
+oiled:V16439 rdf:type oiled:C130 .
+oiled:V16439 rdf:type owl:Thing .
+oiled:C28 rdf:type owl:Class .
+oiled:V16439 rdf:type oiled:C28 .
+oiled:V16439 rdf:type owl:Thing .
+oiled:C108 rdf:type owl:Class .
+oiled:V16439 rdf:type oiled:C108 .
+oiled:V16439 rdf:type owl:Thing .
+oiled:C106 rdf:type owl:Class .
+oiled:V16439 rdf:type oiled:C106 .
+oiled:V16439 rdf:type owl:Thing .
+oiled:C104 rdf:type owl:Class .
+oiled:V16439 rdf:type oiled:C104 .

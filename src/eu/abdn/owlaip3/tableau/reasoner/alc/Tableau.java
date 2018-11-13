@@ -3,7 +3,6 @@ package eu.abdn.owlaip3.tableau.reasoner.alc;
 import java.util.*;
 import java.util.Map.Entry;
 
-import org.coode.owlapi.obo.renderer.OBOStorageException;
 import org.semanticweb.owlapi.model.*;
 
 public class Tableau {
@@ -24,23 +23,26 @@ public class Tableau {
     public Tableau(Set<OWLOntology> ontologies, OWLDataFactory factory) {
         this.ontologies = ontologies;
         this.factory = factory;
-        for (OWLOntology ontology : ontologies)
+        for (OWLOntology ontology : ontologies) {
             for (OWLNamedIndividual i : ontology.getIndividualsInSignature())
                 setupIndividual(i);
+            for (OWLIndividual i : ontology.getReferencedAnonymousIndividuals())
+                setupIndividual(i);
+        }
     }
 
 
-    private void setupIndividual(OWLNamedIndividual indi) {
+    private void setupIndividual(OWLIndividual indi) {
         if (alreadyInitialized(indi)) return;
         setupIndividialLabels(indi);
         setupIndividialProperties(indi);
     }
 
-    private Boolean alreadyInitialized(OWLNamedIndividual indi) {
+    private Boolean alreadyInitialized(OWLIndividual indi) {
         return nodeLabels.get(indi) != null;
     }
 
-    private void setupIndividialLabels(OWLNamedIndividual indi) {
+    private void setupIndividialLabels(OWLIndividual indi) {
         HashSet<OWLClassExpression> labels = new HashSet<>();
         nodes.add(indi);
         nodeLabels.put(indi, labels);
@@ -49,7 +51,7 @@ public class Tableau {
             labels.add(exp.getNNF());
     }
 
-    private void setupIndividialProperties(OWLNamedIndividual indi) {
+    private void setupIndividialProperties(OWLIndividual indi) {
         HashMap<OWLObjectProperty, HashSet<OWLIndividual>> relations = new HashMap<>();
         edges.put(indi, relations);
         for (OWLOntology onto : ontologies)
@@ -252,12 +254,6 @@ public class Tableau {
                         changed = true;
                     }
                 }
-             /*   for (OWLClassExpression equivalent : atomic.getEquivalentClasses(ontologies)){
-                    if (!labels.contains(equivalent.getNNF())) {
-                        toAdd.add(equivalent.getNNF());
-                        changed = true;
-                    }
-                }*/
             }
 
         labels.addAll(toAdd);
@@ -296,16 +292,20 @@ public class Tableau {
         for (OWLOntology o : ontologies) {
             // var generalClassAxionms = o.getGeneralClassAxioms();
             for (OWLAxiom ax : o.getAxioms()) {
-                /*if (ax instanceof OWLSubClassOfAxiom) {
+                if (ax instanceof OWLSubClassOfAxiom) {
                     var subAx = (OWLSubClassOfAxiom) ax;
                     OWLClassExpression sub = subAx.getSubClass();
                     OWLClassExpression sup = subAx.getSuperClass();
-                    if (!sub.isClassExpressionLiteral()) {
+                    if (!sub.isClassExpressionLiteral() || !sup.isClassExpressionLiteral()) {
+                        //  subAx.isGCI()
                         OWLObjectUnionOf newConstraint = factory.getOWLObjectUnionOf(sup, sub.getComplementNNF());
-                        addToEveryIndividual(newConstraint);
-                        changed = true;
+                        for (OWLIndividual i : nodes)
+                            if (!nodeLabels.get(i).contains(newConstraint)) {
+                                nodeLabels.get(i).add(newConstraint);
+                                changed = true;
+                            }
                     }
-                }*/
+                }
                 if (ax instanceof OWLEquivalentClassesAxiom) {
                     var eqAx = (OWLEquivalentClassesAxiom) ax;
                     Set<OWLClassExpression> classes = eqAx.getClassExpressions();
@@ -326,6 +326,7 @@ public class Tableau {
                         }
 
 
+
                 }
                /* if (ax instanceof OWLDisjointClassesAxiom) {
                     //todo
@@ -337,6 +338,16 @@ public class Tableau {
         return changed;
     }
 
+    private boolean addSubclassOf(OWLClassExpression superclass, OWLClassExpression subclass) {
+        boolean changed = false;
+        OWLObjectUnionOf newConstraint = factory.getOWLObjectUnionOf(superclass, subclass.getComplementNNF());
+        for (OWLIndividual i : nodes)
+            if ( !nodeLabels.get(i).contains(newConstraint)) {
+                nodeLabels.get(i).add(newConstraint);
+                changed = true;
+            }
+        return changed;
+    }
 
     @Override
     protected Tableau clone() throws CloneNotSupportedException {

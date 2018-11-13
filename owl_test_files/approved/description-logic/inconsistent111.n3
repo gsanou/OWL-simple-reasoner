@@ -1,0 +1,66 @@
+#
+# Copyright World Wide Web Consortium, (Massachusetts Institute of
+# Technology, European Research Consortium for Informatics and
+# Mathematics, Keio University).
+#
+# All Rights Reserved.
+#
+# Please see the full Copyright clause at
+# <http://www.w3.org/Consortium/Legal/copyright-software.html>
+#
+# Author: Sean Bechhofer
+#
+# Description: 
+#
+# DL Test: heinsohn4.2
+# Tbox tests from <a href="#ref-Heinsohn_et_al.">[Heinsohn et al.]</a>
+# Tests role restrictions
+#
+<http://www.w3.org/2002/03owlt/description-logic/inconsistent111> rdf:type owl:Ontology .
+oiled:Unsatisfiable rdf:type owl:Class .
+_:a rdf:type owl:Class .
+_:c rdf:type owl:Restriction .
+_:c owl:onProperty oiled:r .
+_:e rdf:type owl:Class .
+_:g rdf:type owl:Restriction .
+_:g owl:onProperty oiled:s .
+_:g owl:maxCardinality "1"^^xsd:nonNegativeInteger  .
+_:e owl:complementOf _:g .
+_:c owl:someValuesFrom _:e .
+_:i rdf:type owl:Restriction .
+_:i owl:onProperty oiled:r .
+_:k rdf:type owl:Class .
+oiled:c rdf:type owl:Class .
+_:m rdf:type owl:Class .
+_:o rdf:type owl:Restriction .
+_:o owl:onProperty oiled:s .
+_:o owl:minCardinality "2"^^xsd:nonNegativeInteger  .
+_:m owl:complementOf _:o .
+_:q rdf:first _:m .
+_:q rdf:rest rdf:nil .
+_:s rdf:first oiled:c .
+_:s rdf:rest _:q .
+_:k owl:unionOf _:s .
+_:i owl:allValuesFrom _:k .
+_:u rdf:type owl:Restriction .
+_:u owl:onProperty oiled:r .
+oiled:d rdf:type owl:Class .
+_:u owl:allValuesFrom oiled:d .
+_:w rdf:first _:u .
+_:w rdf:rest rdf:nil .
+_:y rdf:first _:i .
+_:y rdf:rest _:w .
+_:a1 rdf:first _:c .
+_:a1 rdf:rest _:y .
+_:a owl:intersectionOf _:a1 .
+oiled:Unsatisfiable owl:equivalentClass _:a .
+oiled:c rdf:type owl:Class .
+_:c1 rdf:type owl:Class .
+oiled:d rdf:type owl:Class .
+_:c1 owl:complementOf oiled:d .
+oiled:c rdfs:subClassOf _:c1 .
+oiled:d rdf:type owl:Class .
+oiled:e rdf:type owl:Class .
+oiled:r rdf:type owl:ObjectProperty .
+oiled:s rdf:type owl:ObjectProperty .
+_:e1 rdf:type oiled:Unsatisfiable .

@@ -1,0 +1,41 @@
+#
+# Copyright World Wide Web Consortium, (Massachusetts Institute of
+# Technology, European Research Consortium for Informatics and
+# Mathematics, Keio University).
+#
+# All Rights Reserved.
+#
+# Please see the full Copyright clause at
+# <http://www.w3.org/Consortium/Legal/copyright-software.html>
+#
+# Author: Sean Bechhofer
+#
+# Description: 
+#
+# DL Test: k_branch
+# ABox test from DL98 systems comparison.
+#
+oiled:V822576 rdf:type owl:Thing .
+oiled:C110 rdf:type owl:Class .
+oiled:V822576 rdf:type oiled:C110 .
+oiled:V822576 rdf:type owl:Thing .
+oiled:C94 rdf:type owl:Class .
+oiled:V822576 rdf:type oiled:C94 .
+oiled:V822576 rdf:type owl:Thing .
+oiled:C136 rdf:type owl:Class .
+oiled:V822576 rdf:type oiled:C136 .
+oiled:V822576 rdf:type owl:Thing .
+oiled:C58 rdf:type owl:Class .
+oiled:V822576 rdf:type oiled:C58 .
+oiled:V822576 rdf:type owl:Thing .
+oiled:C80 rdf:type owl:Class .
+oiled:V822576 rdf:type oiled:C80 .
+oiled:V822576 rdf:type owl:Thing .
+oiled:C56 rdf:type owl:Class .
+oiled:V822576 rdf:type oiled:C56 .
+oiled:V822576 rdf:type owl:Thing .
+oiled:C116 rdf:type owl:Class .
+oiled:V822576 rdf:type oiled:C116 .
+oiled:V822576 rdf:type owl:Thing .
+oiled:C114 rdf:type owl:Class .
+oiled:V822576 rdf:type oiled:C114 .

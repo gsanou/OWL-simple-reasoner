@@ -1,0 +1,91 @@
+#
+# Copyright World Wide Web Consortium, (Massachusetts Institute of
+# Technology, European Research Consortium for Informatics and
+# Mathematics, Keio University).
+#
+# All Rights Reserved.
+#
+# Please see the full Copyright clause at
+# <http://www.w3.org/Consortium/Legal/copyright-software.html>
+#
+# Author: Sean Bechhofer
+#
+# Description: 
+#
+# DL Test: k_ph
+# ABox test from DL98 systems comparison.
+#
+<http://www.w3.org/2002/03owlt/description-logic/premises207> rdf:type owl:Ontology .
+oiled:C10 rdf:type owl:Class .
+_:a rdf:type owl:Class .
+oiled:C2 rdf:type owl:Class .
+oiled:C4 rdf:type owl:Class .
+_:c rdf:first oiled:C4 .
+_:c rdf:rest rdf:nil .
+_:e rdf:first oiled:C2 .
+_:e rdf:rest _:c .
+_:a owl:intersectionOf _:e .
+oiled:C10 owl:equivalentClass _:a .
+oiled:C12 rdf:type owl:Class .
+_:g rdf:type owl:Restriction .
+_:g owl:onProperty oiled:R1 .
+oiled:C10 rdf:type owl:Class .
+_:g owl:someValuesFrom oiled:C10 .
+oiled:C12 owl:equivalentClass _:g .
+oiled:C2 rdf:type owl:Class .
+oiled:C4 rdf:type owl:Class .
+oiled:C6 rdf:type owl:Class .
+_:i rdf:type owl:Class .
+_:k rdf:type owl:Class .
+oiled:C2 rdf:type owl:Class .
+_:k owl:complementOf oiled:C2 .
+oiled:C4 rdf:type owl:Class .
+_:m rdf:first oiled:C4 .
+_:m rdf:rest rdf:nil .
+_:o rdf:first _:k .
+_:o rdf:rest _:m .
+_:i owl:intersectionOf _:o .
+oiled:C6 owl:equivalentClass _:i .
+oiled:C8 rdf:type owl:Class .
+_:q rdf:type owl:Restriction .
+_:q owl:onProperty oiled:R1 .
+oiled:C6 rdf:type owl:Class .
+_:q owl:someValuesFrom oiled:C6 .
+oiled:C8 owl:equivalentClass _:q .
+oiled:TEST rdf:type owl:Class .
+_:s rdf:type owl:Class .
+_:u rdf:type owl:Class .
+oiled:C8 rdf:type owl:Class .
+_:u owl:complementOf oiled:C8 .
+oiled:C12 rdf:type owl:Class .
+_:w rdf:first oiled:C12 .
+_:w rdf:rest rdf:nil .
+_:y rdf:first _:u .
+_:y rdf:rest _:w .
+_:s owl:intersectionOf _:y .
+oiled:TEST owl:equivalentClass _:s .
+oiled:R1 rdf:type owl:ObjectProperty .
+oiled:V21080 rdf:type owl:Thing .
+oiled:TEST rdf:type owl:Class .
+oiled:V21080 rdf:type oiled:TEST .
+_:a1 rdf:type owl:Class .
+oiled:C8 rdf:type owl:Class .
+_:a1 owl:complementOf oiled:C8 .
+oiled:V21080 rdf:type _:a1 .
+_:c1 rdf:type owl:Restriction .
+_:c1 owl:onProperty oiled:R1 .
+_:e1 rdf:type owl:Class .
+oiled:C6 rdf:type owl:Class .
+_:e1 owl:complementOf oiled:C6 .
+_:c1 owl:allValuesFrom _:e1 .
+oiled:V21080 rdf:type _:c1 .
+oiled:V21080 oiled:R1 oiled:V21081 .
+oiled:V21081 rdf:type owl:Thing .
+oiled:C4 rdf:type owl:Class .
+oiled:V21081 rdf:type oiled:C4 .
+oiled:C2 rdf:type owl:Class .
+oiled:V21081 rdf:type oiled:C2 .
+_:g1 rdf:type owl:Class .
+oiled:C6 rdf:type owl:Class .
+_:g1 owl:complementOf oiled:C6 .
+oiled:V21081 rdf:type _:g1 .

@@ -34,7 +34,7 @@ public class InconsistencyTest {
         final String basePath = "owl_test_files/approved/description-logic";
         File folder = new File(basePath);
         File[] listOfFiles = folder.listFiles();
-        List<File> inconsistentOntologies = Arrays.stream(listOfFiles).filter(f -> f.getName().contains("inconsistent") && f.getName().contains("rdf")).collect(Collectors.toList());
+        List<File> inconsistentOntologies = Arrays.stream(listOfFiles).filter(f -> f.getName().contains("inconsistent") && f.getName().contains("rdf") && f.getName().contains("001")).collect(Collectors.toList());
         String[] res = new String[inconsistentOntologies.size()];
         for (int i = 0; i < inconsistentOntologies.size(); i++) {
             res[i] = basePath + "/" + inconsistentOntologies.get(i).getName();
@@ -47,6 +47,7 @@ public class InconsistencyTest {
         String[] args = new String[2];
         args[0] = "";
         args[1] = this.path;
+        originalOut.println("trying with "+this.path);
         ConsistencyCheckingExampleFromArgs.main(args);
         assertEquals("The ontology is inconsistent!\n", outContent.toString());
     }

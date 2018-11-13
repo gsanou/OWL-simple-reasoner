@@ -1,0 +1,62 @@
+#
+# Copyright World Wide Web Consortium, (Massachusetts Institute of
+# Technology, European Research Consortium for Informatics and
+# Mathematics, Keio University).
+#
+# All Rights Reserved.
+#
+# Please see the full Copyright clause at
+# <http://www.w3.org/Consortium/Legal/copyright-software.html>
+#
+# Author: Sean Bechhofer
+#
+# Description: 
+#
+# DL Test: heinsohn4.1
+# Tbox tests from <a href="#ref-Heinsohn_et_al.">[Heinsohn et al.]</a>
+# Tests role restrictions
+#
+<http://www.w3.org/2002/03owlt/description-logic/inconsistent110> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Ontology> .
+<http://oiled.man.example.net/test#Unsatisfiable> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+_:a <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+_:c <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
+_:c <http://www.w3.org/2002/07/owl#onProperty> <http://oiled.man.example.net/test#r> .
+_:e <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://oiled.man.example.net/test#e> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+_:e <http://www.w3.org/2002/07/owl#complementOf> <http://oiled.man.example.net/test#e> .
+_:c <http://www.w3.org/2002/07/owl#someValuesFrom> _:e .
+_:g <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
+_:g <http://www.w3.org/2002/07/owl#onProperty> <http://oiled.man.example.net/test#r> .
+<http://oiled.man.example.net/test#d> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+_:g <http://www.w3.org/2002/07/owl#allValuesFrom> <http://oiled.man.example.net/test#d> .
+_:i <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
+_:i <http://www.w3.org/2002/07/owl#onProperty> <http://oiled.man.example.net/test#r> .
+_:k <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://oiled.man.example.net/test#e> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+_:m <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://oiled.man.example.net/test#d> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+_:m <http://www.w3.org/2002/07/owl#complementOf> <http://oiled.man.example.net/test#d> .
+_:o <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> _:m .
+_:o <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> <http://www.w3.org/1999/02/22-rdf-syntax-ns#nil> .
+_:q <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> <http://oiled.man.example.net/test#e> .
+_:q <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> _:o .
+_:k <http://www.w3.org/2002/07/owl#unionOf> _:q .
+_:i <http://www.w3.org/2002/07/owl#allValuesFrom> _:k .
+_:s <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> _:i .
+_:s <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> <http://www.w3.org/1999/02/22-rdf-syntax-ns#nil> .
+_:u <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> _:g .
+_:u <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> _:s .
+_:w <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> _:c .
+_:w <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> _:u .
+_:a <http://www.w3.org/2002/07/owl#intersectionOf> _:w .
+<http://oiled.man.example.net/test#Unsatisfiable> <http://www.w3.org/2002/07/owl#equivalentClass> _:a .
+<http://oiled.man.example.net/test#c> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+_:y <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://oiled.man.example.net/test#d> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+_:y <http://www.w3.org/2002/07/owl#complementOf> <http://oiled.man.example.net/test#d> .
+<http://oiled.man.example.net/test#c> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:y .
+<http://oiled.man.example.net/test#d> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://oiled.man.example.net/test#e> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://oiled.man.example.net/test#r> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<http://oiled.man.example.net/test#s> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+_:a1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://oiled.man.example.net/test#Unsatisfiable> .

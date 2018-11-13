@@ -1,0 +1,69 @@
+#
+# Copyright World Wide Web Consortium, (Massachusetts Institute of
+# Technology, European Research Consortium for Informatics and
+# Mathematics, Keio University).
+#
+# All Rights Reserved.
+#
+# Please see the full Copyright clause at
+# <http://www.w3.org/Consortium/Legal/copyright-software.html>
+#
+# Author: Sean Bechhofer
+#
+# Description: 
+#
+# DL Test: t7.2
+#
+<http://www.w3.org/2002/03owlt/description-logic/inconsistent629> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Ontology> .
+<http://oiled.man.example.net/test#p1.comp> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+_:a <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
+<http://www.w3.org/2002/03owlt/description-logic/inconsistent629#P.1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+_:a <http://www.w3.org/2002/07/owl#onProperty> <http://www.w3.org/2002/03owlt/description-logic/inconsistent629#P.1> .
+_:a <http://www.w3.org/2002/07/owl#minCardinality> "1"^^<http://www.w3.org/2001/XMLSchema#int>  .
+<http://oiled.man.example.net/test#p1.comp> <http://www.w3.org/2002/07/owl#equivalentClass> _:a .
+<http://www.w3.org/2002/03owlt/description-logic/inconsistent629#V.3> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+_:c <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
+<http://oiled.man.example.net/test#r> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+_:c <http://www.w3.org/2002/07/owl#onProperty> <http://oiled.man.example.net/test#r> .
+<http://www.w3.org/2002/03owlt/description-logic/inconsistent629#A.2> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+_:c <http://www.w3.org/2002/07/owl#someValuesFrom> <http://www.w3.org/2002/03owlt/description-logic/inconsistent629#A.2> .
+<http://www.w3.org/2002/03owlt/description-logic/inconsistent629#V.3> <http://www.w3.org/2002/07/owl#equivalentClass> _:c .
+<http://www.w3.org/2002/03owlt/description-logic/inconsistent629#A.2> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://oiled.man.example.net/test#p1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+_:e <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
+<http://oiled.man.example.net/test#invR> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+_:e <http://www.w3.org/2002/07/owl#onProperty> <http://oiled.man.example.net/test#invR> .
+_:e <http://www.w3.org/2002/07/owl#allValuesFrom> <http://oiled.man.example.net/test#p1.comp> .
+_:g <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> _:e .
+_:g <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> <http://www.w3.org/1999/02/22-rdf-syntax-ns#nil> .
+_:i <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> <http://oiled.man.example.net/test#p1> .
+_:i <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> _:g .
+<http://www.w3.org/2002/03owlt/description-logic/inconsistent629#A.2> <http://www.w3.org/2002/07/owl#intersectionOf> _:i .
+<http://oiled.man.example.net/test#Unsatisfiable> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://oiled.man.example.net/test#p1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+_:k <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
+<http://oiled.man.example.net/test#r> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+_:k <http://www.w3.org/2002/07/owl#onProperty> <http://oiled.man.example.net/test#r> .
+_:k <http://www.w3.org/2002/07/owl#someValuesFrom> <http://www.w3.org/2002/03owlt/description-logic/inconsistent629#V.3> .
+_:m <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> _:k .
+_:m <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> <http://www.w3.org/1999/02/22-rdf-syntax-ns#nil> .
+_:o <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> <http://oiled.man.example.net/test#p1> .
+_:o <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> _:m .
+<http://oiled.man.example.net/test#Unsatisfiable> <http://www.w3.org/2002/07/owl#intersectionOf> _:o .
+<http://oiled.man.example.net/test#p1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+_:q <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
+_:q <http://www.w3.org/2002/07/owl#onProperty> <http://www.w3.org/2002/03owlt/description-logic/inconsistent629#P.1> .
+_:q <http://www.w3.org/2002/07/owl#maxCardinality> "0"^^<http://www.w3.org/2001/XMLSchema#int>  .
+<http://oiled.man.example.net/test#p1> <http://www.w3.org/2002/07/owl#equivalentClass> _:q .
+<http://oiled.man.example.net/test#f> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<http://oiled.man.example.net/test#invF> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<http://oiled.man.example.net/test#invF> <http://www.w3.org/2002/07/owl#inverseOf> <http://oiled.man.example.net/test#f> .
+<http://oiled.man.example.net/test#r> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<http://oiled.man.example.net/test#r> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#TransitiveProperty> .
+<http://oiled.man.example.net/test#invR> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<http://oiled.man.example.net/test#invR> <http://www.w3.org/2002/07/owl#inverseOf> <http://oiled.man.example.net/test#r> .
+_:s <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://oiled.man.example.net/test#Unsatisfiable> .
+_:u <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
+_:u <http://www.w3.org/2002/07/owl#onProperty> <http://oiled.man.example.net/test#f> .
+_:u <http://www.w3.org/2002/07/owl#maxCardinality> "1"^^<http://www.w3.org/2001/XMLSchema#nonNegativeInteger>  .
+<http://www.w3.org/2002/07/owl#Thing> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:u .

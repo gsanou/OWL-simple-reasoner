@@ -1,0 +1,65 @@
+#
+# Copyright World Wide Web Consortium, (Massachusetts Institute of
+# Technology, European Research Consortium for Informatics and
+# Mathematics, Keio University).
+#
+# All Rights Reserved.
+#
+# Please see the full Copyright clause at
+# <http://www.w3.org/Consortium/Legal/copyright-software.html>
+#
+# Author: Jeremy J. Carroll
+#
+# Description: 
+#
+# This test shows integer multiplication in OWL DL, interacting with infinity.<br></br>
+# N times infinity is 2  times infinity. 
+# M times infinity is 3 times infinity. 
+# N times M times infinity is 5 times infinity.
+#
+<http://www.w3.org/2002/03owlt/description-logic/consistent908#p-N-to-1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<http://www.w3.org/2002/03owlt/description-logic/consistent908#invP-1-to-N> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<http://www.w3.org/2002/03owlt/description-logic/consistent908#p-N-to-1> <http://www.w3.org/2002/07/owl#inverseOf> <http://www.w3.org/2002/03owlt/description-logic/consistent908#invP-1-to-N> .
+<http://www.w3.org/2002/03owlt/description-logic/consistent908#p-N-to-1> <http://www.w3.org/2000/01/rdf-schema#domain> <http://www.w3.org/2002/03owlt/description-logic/consistent908#cardinality-N> .
+<http://www.w3.org/2002/03owlt/description-logic/consistent908#p-N-to-1> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2002/03owlt/description-logic/consistent908#infinite> .
+<http://www.w3.org/2002/03owlt/description-logic/consistent908#p-N-to-1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<http://www.w3.org/2002/03owlt/description-logic/consistent908#q-M-to-1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<http://www.w3.org/2002/03owlt/description-logic/consistent908#invQ-1-to-M> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<http://www.w3.org/2002/03owlt/description-logic/consistent908#q-M-to-1> <http://www.w3.org/2002/07/owl#inverseOf> <http://www.w3.org/2002/03owlt/description-logic/consistent908#invQ-1-to-M> .
+<http://www.w3.org/2002/03owlt/description-logic/consistent908#q-M-to-1> <http://www.w3.org/2000/01/rdf-schema#domain> <http://www.w3.org/2002/03owlt/description-logic/consistent908#cardinality-N-times-M> .
+<http://www.w3.org/2002/03owlt/description-logic/consistent908#q-M-to-1> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2002/03owlt/description-logic/consistent908#cardinality-N> .
+<http://www.w3.org/2002/03owlt/description-logic/consistent908#q-M-to-1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<http://www.w3.org/2002/03owlt/description-logic/consistent908#r-N-times-M-to-1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<http://www.w3.org/2002/03owlt/description-logic/consistent908#invR-N-times-M-to-1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<http://www.w3.org/2002/03owlt/description-logic/consistent908#r-N-times-M-to-1> <http://www.w3.org/2002/07/owl#inverseOf> <http://www.w3.org/2002/03owlt/description-logic/consistent908#invR-N-times-M-to-1> .
+<http://www.w3.org/2002/03owlt/description-logic/consistent908#r-N-times-M-to-1> <http://www.w3.org/2000/01/rdf-schema#domain> <http://www.w3.org/2002/03owlt/description-logic/consistent908#cardinality-N-times-M> .
+<http://www.w3.org/2002/03owlt/description-logic/consistent908#r-N-times-M-to-1> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2002/03owlt/description-logic/consistent908#infinite> .
+<http://www.w3.org/2002/03owlt/description-logic/consistent908#r-N-times-M-to-1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<http://www.w3.org/2002/03owlt/description-logic/consistent908#infinite> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+_:a <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
+_:a <http://www.w3.org/2002/07/owl#onProperty> <http://www.w3.org/2002/03owlt/description-logic/consistent908#invP-1-to-N> .
+_:a <http://www.w3.org/2002/07/owl#cardinality> "2"^^<http://www.w3.org/2001/XMLSchema#integer>  .
+<http://www.w3.org/2002/03owlt/description-logic/consistent908#infinite> <http://www.w3.org/2002/07/owl#equivalentClass> _:a .
+_:c <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
+_:c <http://www.w3.org/2002/07/owl#onProperty> <http://www.w3.org/2002/03owlt/description-logic/consistent908#invR-N-times-M-to-1> .
+_:c <http://www.w3.org/2002/07/owl#cardinality> "5"^^<http://www.w3.org/2001/XMLSchema#integer>  .
+<http://www.w3.org/2002/03owlt/description-logic/consistent908#infinite> <http://www.w3.org/2002/07/owl#equivalentClass> _:c .
+<http://www.w3.org/2002/03owlt/description-logic/consistent908#cardinality-N> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+_:e <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
+_:e <http://www.w3.org/2002/07/owl#onProperty> <http://www.w3.org/2002/03owlt/description-logic/consistent908#p-N-to-1> .
+_:e <http://www.w3.org/2002/07/owl#someValuesFrom> <http://www.w3.org/2002/03owlt/description-logic/consistent908#infinite> .
+<http://www.w3.org/2002/03owlt/description-logic/consistent908#cardinality-N> <http://www.w3.org/2002/07/owl#equivalentClass> _:e .
+_:g <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
+_:g <http://www.w3.org/2002/07/owl#onProperty> <http://www.w3.org/2002/03owlt/description-logic/consistent908#invQ-1-to-M> .
+_:g <http://www.w3.org/2002/07/owl#cardinality> "3"^^<http://www.w3.org/2001/XMLSchema#integer>  .
+<http://www.w3.org/2002/03owlt/description-logic/consistent908#cardinality-N> <http://www.w3.org/2002/07/owl#equivalentClass> _:g .
+<http://www.w3.org/2002/03owlt/description-logic/consistent908#cardinality-N-times-M> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+_:i <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
+_:i <http://www.w3.org/2002/07/owl#onProperty> <http://www.w3.org/2002/03owlt/description-logic/consistent908#q-M-to-1> .
+_:i <http://www.w3.org/2002/07/owl#someValuesFrom> <http://www.w3.org/2002/03owlt/description-logic/consistent908#cardinality-N> .
+<http://www.w3.org/2002/03owlt/description-logic/consistent908#cardinality-N-times-M> <http://www.w3.org/2002/07/owl#equivalentClass> _:i .
+<http://www.w3.org/2002/03owlt/description-logic/consistent908#cardinality-N-times-M> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+_:k <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
+_:k <http://www.w3.org/2002/07/owl#onProperty> <http://www.w3.org/2002/03owlt/description-logic/consistent908#r-N-times-M-to-1> .
+_:k <http://www.w3.org/2002/07/owl#someValuesFrom> <http://www.w3.org/2002/03owlt/description-logic/consistent908#infinite> .
+<http://www.w3.org/2002/03owlt/description-logic/consistent908#cardinality-N-times-M> <http://www.w3.org/2002/07/owl#equivalentClass> _:k .

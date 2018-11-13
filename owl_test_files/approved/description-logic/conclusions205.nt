@@ -1,0 +1,35 @@
+#
+# Copyright World Wide Web Consortium, (Massachusetts Institute of
+# Technology, European Research Consortium for Informatics and
+# Mathematics, Keio University).
+#
+# All Rights Reserved.
+#
+# Please see the full Copyright clause at
+# <http://www.w3.org/Consortium/Legal/copyright-software.html>
+#
+# Author: Sean Bechhofer
+#
+# Description: 
+#
+# DL Test: k_lin
+# ABox test from DL98 systems comparison.
+#
+<http://oiled.man.example.net/test#V16560> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Thing> .
+<http://oiled.man.example.net/test#C18> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://oiled.man.example.net/test#V16560> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://oiled.man.example.net/test#C18> .
+<http://oiled.man.example.net/test#V16560> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Thing> .
+<http://oiled.man.example.net/test#C8> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://oiled.man.example.net/test#V16560> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://oiled.man.example.net/test#C8> .
+<http://oiled.man.example.net/test#V16560> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Thing> .
+<http://oiled.man.example.net/test#C16> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://oiled.man.example.net/test#V16560> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://oiled.man.example.net/test#C16> .
+<http://oiled.man.example.net/test#V16560> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Thing> .
+<http://oiled.man.example.net/test#C14> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://oiled.man.example.net/test#V16560> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://oiled.man.example.net/test#C14> .
+<http://oiled.man.example.net/test#V16561> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Thing> .
+<http://oiled.man.example.net/test#C6> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://oiled.man.example.net/test#V16561> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://oiled.man.example.net/test#C6> .
+<http://oiled.man.example.net/test#V16562> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Thing> .
+<http://oiled.man.example.net/test#C12> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://oiled.man.example.net/test#V16562> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://oiled.man.example.net/test#C12> .

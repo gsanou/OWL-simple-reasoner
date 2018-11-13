@@ -1,0 +1,22 @@
+#
+# Copyright World Wide Web Consortium, (Massachusetts Institute of
+# Technology, European Research Consortium for Informatics and
+# Mathematics, Keio University).
+#
+# All Rights Reserved.
+#
+# Please see the full Copyright clause at
+# <http://www.w3.org/Consortium/Legal/copyright-software.html>
+#
+# Author: Sean Bechhofer
+#
+# Description: 
+#
+# DL Test: k_poly
+# ABox test from DL98 systems comparison.
+# (Modified in light of implementation feedback, see test 
+# <a href="#description-logic-208">description-logic-208</a>).
+#
+oiled:V16448 rdf:type owl:Thing .
+oiled:C122 rdf:type owl:Class .
+oiled:V16448 rdf:type oiled:C122 .

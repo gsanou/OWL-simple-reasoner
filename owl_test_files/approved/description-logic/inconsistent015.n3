@@ -1,0 +1,66 @@
+#
+# Copyright World Wide Web Consortium, (Massachusetts Institute of
+# Technology, European Research Consortium for Informatics and
+# Mathematics, Keio University).
+#
+# All Rights Reserved.
+#
+# Please see the full Copyright clause at
+# <http://www.w3.org/Consortium/Legal/copyright-software.html>
+#
+# Author: Sean Bechhofer
+#
+# Description: 
+#
+# DL Test: t12.1
+#
+<http://www.w3.org/2002/03owlt/description-logic/inconsistent015> rdf:type owl:Ontology .
+oiled:Unsatisfiable rdf:type owl:Class .
+_:a rdf:type owl:Class .
+_:c rdf:type owl:Restriction .
+_:c owl:onProperty oiled:s .
+_:e rdf:type owl:Class .
+_:g rdf:type owl:Class .
+oiled:p rdf:type owl:Class .
+_:g owl:complementOf oiled:p .
+_:i rdf:type owl:Class .
+oiled:q rdf:type owl:Class .
+_:i owl:complementOf oiled:q .
+_:k rdf:first _:i .
+_:k rdf:rest rdf:nil .
+_:m rdf:first _:g .
+_:m rdf:rest _:k .
+_:e owl:intersectionOf _:m .
+_:c owl:someValuesFrom _:e .
+_:o rdf:type owl:Restriction .
+_:o owl:onProperty oiled:r .
+_:q rdf:type owl:Class .
+_:s rdf:type owl:Restriction .
+_:s owl:onProperty oiled:invR .
+_:s owl:maxCardinality "1"^^xsd:nonNegativeInteger  .
+_:u rdf:type owl:Restriction .
+_:u owl:onProperty oiled:invR .
+_:w rdf:type owl:Restriction .
+_:w owl:onProperty oiled:s .
+oiled:p rdf:type owl:Class .
+_:w owl:allValuesFrom oiled:p .
+_:u owl:someValuesFrom _:w .
+_:y rdf:first _:u .
+_:y rdf:rest rdf:nil .
+_:a1 rdf:first _:s .
+_:a1 rdf:rest _:y .
+_:q owl:intersectionOf _:a1 .
+_:o owl:someValuesFrom _:q .
+_:c1 rdf:first _:o .
+_:c1 rdf:rest rdf:nil .
+_:e1 rdf:first _:c .
+_:e1 rdf:rest _:c1 .
+_:a owl:intersectionOf _:e1 .
+oiled:Unsatisfiable owl:equivalentClass _:a .
+oiled:p rdf:type owl:Class .
+oiled:q rdf:type owl:Class .
+oiled:invR rdf:type owl:ObjectProperty .
+oiled:invR owl:inverseOf oiled:r .
+oiled:r rdf:type owl:ObjectProperty .
+oiled:s rdf:type owl:ObjectProperty .
+_:g1 rdf:type oiled:Unsatisfiable .

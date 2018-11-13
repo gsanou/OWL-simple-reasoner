@@ -1,0 +1,26 @@
+#
+# Copyright World Wide Web Consortium, (Massachusetts Institute of
+# Technology, European Research Consortium for Informatics and
+# Mathematics, Keio University).
+#
+# All Rights Reserved.
+#
+# Please see the full Copyright clause at
+# <http://www.w3.org/Consortium/Legal/copyright-software.html>
+#
+# Author: Sean Bechhofer
+#
+# Description: 
+#
+# DL Test: k_dum
+# ABox test from DL98 systems comparison.
+#
+oiled:V5475 rdf:type owl:Thing .
+oiled:C140 rdf:type owl:Class .
+oiled:V5475 rdf:type oiled:C140 .
+oiled:V5475 rdf:type owl:Thing .
+oiled:C116 rdf:type owl:Class .
+oiled:V5475 rdf:type oiled:C116 .
+oiled:V5475 rdf:type owl:Thing .
+oiled:C138 rdf:type owl:Class .
+oiled:V5475 rdf:type oiled:C138 .

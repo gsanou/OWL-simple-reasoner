@@ -1,0 +1,36 @@
+#
+# Copyright World Wide Web Consortium, (Massachusetts Institute of
+# Technology, European Research Consortium for Informatics and
+# Mathematics, Keio University).
+#
+# All Rights Reserved.
+#
+# Please see the full Copyright clause at
+# <http://www.w3.org/Consortium/Legal/copyright-software.html>
+#
+# Author: Jeremy J. Carroll
+#
+# Description: 
+#
+# This entailment can be replicated for any three natural numbers
+# <em>i</em>, <em>j</em>, <em>k</em> such that <em>i</em>+<em>j</em> &gt;= <em>k</em>. In this example, they are chosen as 2, 3 and 5.
+#
+_:a <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+_:c <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
+<http://www.w3.org/2002/03owlt/description-logic/premises901#p> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+_:c <http://www.w3.org/2002/07/owl#onProperty> <http://www.w3.org/2002/03owlt/description-logic/premises901#p> .
+_:c <http://www.w3.org/2002/07/owl#minCardinality> "2"^^<http://www.w3.org/2001/XMLSchema#nonNegativeInteger>  .
+_:e <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
+<http://www.w3.org/2002/03owlt/description-logic/premises901#q> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+_:e <http://www.w3.org/2002/07/owl#onProperty> <http://www.w3.org/2002/03owlt/description-logic/premises901#q> .
+_:e <http://www.w3.org/2002/07/owl#minCardinality> "3"^^<http://www.w3.org/2001/XMLSchema#nonNegativeInteger>  .
+_:g <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> _:e .
+_:g <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> <http://www.w3.org/1999/02/22-rdf-syntax-ns#nil> .
+_:i <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> _:c .
+_:i <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> _:g .
+_:a <http://www.w3.org/2002/07/owl#intersectionOf> _:i .
+_:k <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
+<http://www.w3.org/2002/03owlt/description-logic/premises901#r> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+_:k <http://www.w3.org/2002/07/owl#onProperty> <http://www.w3.org/2002/03owlt/description-logic/premises901#r> .
+_:k <http://www.w3.org/2002/07/owl#minCardinality> "5"^^<http://www.w3.org/2001/XMLSchema#nonNegativeInteger>  .
+_:a <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:k .
