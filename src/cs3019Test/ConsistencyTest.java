@@ -27,7 +27,7 @@ public class ConsistencyTest {
     private final PrintStream originalErr = System.err;
 
     @Rule
-    public Timeout globalTimeout = Timeout.seconds(2);
+    public Timeout globalTimeout = Timeout.seconds(10);
 
     @Parameterized.Parameter
     public String path;
@@ -35,15 +35,7 @@ public class ConsistencyTest {
 
     @Parameterized.Parameters
     public static Iterable<? extends Object> data() {
-        final String basePath = "owl_test_files/approved/description-logic";
-        File folder = new File(basePath);
-        File[] listOfFiles = folder.listFiles();
-        List<File> inconsistentOntologies = Arrays.stream(listOfFiles).filter(f -> f.getName().contains("consistent") && !f.getName().contains("in") && f.getName().contains("rdf")).collect(Collectors.toList());
-        String[] res = new String[inconsistentOntologies.size()];
-        for (int i = 0; i < inconsistentOntologies.size(); i++) {
-            res[i] = basePath + "/" + inconsistentOntologies.get(i).getName();
-        }
-        return Arrays.asList(res);
+        return Arrays.asList(TestUtils.getConsistentFiles());
     }
 
     @Test
