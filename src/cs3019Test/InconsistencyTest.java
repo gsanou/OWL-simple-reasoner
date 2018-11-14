@@ -2,7 +2,9 @@ package cs3019Test;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.Timeout;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
@@ -27,6 +29,9 @@ public class InconsistencyTest {
 
     @Parameterized.Parameter
     public String path;
+
+    @Rule
+    public Timeout globalTimeout = Timeout.seconds(2);
 
 
     @Parameterized.Parameters

@@ -34,39 +34,36 @@ public class DefaultTests {
         BlockingExample.main(null);
         assertEquals("The concept is satisfiable!\n", outContent.toString());
     }
+
     @Test
     public void testConsistencyCheckingExample() throws OWLOntologyCreationException, CloneNotSupportedException, IOException {
         ConsistencyCheckingExample.main(null);
         assertEquals("The ontology is inconsistent!\n", outContent.toString());
     }
+
     @Test
     public void testDisjunctExample() throws OWLOntologyCreationException, CloneNotSupportedException, IOException {
         DisjunctionExample.main(null);
         assertEquals("The subsumption is entailed!\n", outContent.toString());
     }
+
     @Test
     public void testGCIExample() throws OWLOntologyCreationException, CloneNotSupportedException, IOException {
         GCIExample.main(null);
         assertEquals("The class assertion is entailed!\n", outContent.toString());
     }
+
     @Test
     public void testAssessment() throws OWLOntologyCreationException, CloneNotSupportedException, IOException {
         ConsistencyCheckingExampleFromArgs.main(new String[]{"", "owl_test_files/computer.owl"});
         assertEquals("The ontology is consistent!\n", outContent.toString());
     }
+
     @Test
     public void subsumptionCheckingExample() throws OWLOntologyCreationException, CloneNotSupportedException, IOException {
         SubsumptionCheckingExample.main(null);
         assertEquals("The subsumption is entailed!\n", outContent.toString());
     }
-
-    @Test
-    public void inconsistency() {
-        File folder = new File("owl_test_files/approved/description-logic");
-        File[] listOfFiles = folder.listFiles();
-        List<File> inconsistentOntologies =  Arrays.stream(listOfFiles).filter(f -> f.getName().contains("inconsistent")).collect(Collectors.toList());
-    }
-
 
     @After
     public void restoreStreams() {

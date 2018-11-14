@@ -349,7 +349,6 @@ public class Tableau {
             }
 
         return changed;
-
     }
 
     @Override
