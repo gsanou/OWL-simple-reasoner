@@ -14,6 +14,8 @@ public class Tableau {
     private HashMap<OWLIndividual, HashSet<OWLClassExpression>> nodeLabels = new HashMap<>();
     private HashMap<OWLIndividual, HashMap<OWLObjectProperty, HashSet<OWLIndividual>>> edges = new HashMap<>();
 
+    HashSet<OWLClassExpression> globalExpressions = new HashSet<>();
+
     public Tableau() {
     }
 
@@ -176,6 +178,7 @@ public class Tableau {
         HashSet<OWLClassExpression> labels = nodeLabels.get(indi);
         if (labels == null) {
             labels = new HashSet<OWLClassExpression>();
+            labels.addAll(globalExpressions);
             nodes.add(indi);
             nodeLabels.put(indi, labels);
             HashMap<OWLObjectProperty, HashSet<OWLIndividual>> relations = new HashMap<>();
@@ -201,6 +204,7 @@ public class Tableau {
                     OWLIndividual newindi = factory.getOWLAnonymousIndividual();
                     nodes.add(newindi);
                     HashSet<OWLClassExpression> labels = new HashSet<OWLClassExpression>();
+                    labels.addAll(globalExpressions);
                     labels.add(filler.getNNF());
                     nodeLabels.put(newindi, labels);
                     HashMap<OWLObjectProperty, HashSet<OWLIndividual>> relations = new HashMap<OWLObjectProperty, HashSet<OWLIndividual>>();
@@ -301,14 +305,11 @@ public class Tableau {
                 if (ax instanceof OWLEquivalentClassesAxiom) {
 
                     var eqAx = (OWLEquivalentClassesAxiom) ax;
-                    List<OWLClassExpression> classes = new ArrayList<>(eqAx.getClassExpressions());
-                    if (classes.size() < 2) continue;
-                    if (classes.size() > 2) ; // todo
-                    OWLClassExpression C = classes.get(0);
-                    OWLClassExpression D = classes.get(1);
-
-                    changed |= addSubclassOf(C, D);
-                    changed |= addSubclassOf(D, C);
+                    for (var C : eqAx.getClassExpressions())
+                        for (var D : eqAx.getClassExpressionsMinus(C)) {
+                            changed |= addSubclassOf(C, D);
+                            changed |= addSubclassOf(D, C);
+                        }
                 }
             }
         }
@@ -334,6 +335,7 @@ public class Tableau {
         boolean changed = false;
         if (!subclass.isClassExpressionLiteral()) { // GCI
             OWLObjectUnionOf newConstraint = factory.getOWLObjectUnionOf(superclass, subclass.getComplementNNF());
+            globalExpressions.add(newConstraint);
             for (OWLIndividual i : nodes)
                 if (!nodeLabels.get(i).contains(newConstraint)) {
                     nodeLabels.get(i).add(newConstraint);
@@ -342,10 +344,11 @@ public class Tableau {
             return changed;
         }
         //normal subclass axiom
-        for (OWLIndividual i : nodes)
-            if (nodeLabels.get(i).contains(subclass) && !nodeLabels.get(i).contains(superclass)) {
-                nodeLabels.get(i).add(superclass);
+        var newSubclassAxiom = factory.getOWLSubClassOfAxiom(subclass, superclass);
+        for (var o : ontologies)
+            if (!o.getAxioms().contains(newSubclassAxiom)) {
                 changed = true;
+                o.getOWLOntologyManager().addAxiom(o, newSubclassAxiom);
             }
 
         return changed;
